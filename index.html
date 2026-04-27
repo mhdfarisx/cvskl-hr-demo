@@ -693,6 +693,22 @@
         <input class="form-inp" id="ac-interviewer" type="text" placeholder="Optional">
       </div>
       <div style="grid-column:1/-1">
+        <label class="form-lbl">Resume / CV</label>
+        <label id="resume-drop" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border:2px dashed var(--border);border-radius:10px;padding:22px;cursor:pointer;transition:border-color 0.15s;background:var(--bg)" onmouseenter="this.style.borderColor='var(--primary)'" onmouseleave="this.style.borderColor='var(--border)'">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5" style="width:28px;height:28px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <span id="resume-label" style="font-size:13px;color:var(--muted)">Click to upload or drag & drop</span>
+          <span style="font-size:11px;color:var(--muted)">PDF, DOC, DOCX — max 5MB</span>
+          <input type="file" accept=".pdf,.doc,.docx" style="display:none" onchange="
+            const f = this.files[0];
+            if (f) {
+              document.getElementById('resume-label').textContent = f.name;
+              document.getElementById('resume-label').style.color = 'var(--primary)';
+              document.getElementById('resume-label').style.fontWeight = '600';
+            }
+          ">
+        </label>
+      </div>
+      <div style="grid-column:1/-1">
         <label class="form-lbl">Notes</label>
         <textarea class="form-inp" id="ac-notes" rows="3" placeholder="Any additional notes..." style="resize:vertical"></textarea>
       </div>

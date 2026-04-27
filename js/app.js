@@ -919,6 +919,10 @@ function openAddCandidateForm() {
   document.getElementById('ac-stage').value = 'Applied';
   document.getElementById('ac-date').value = '2026-04-27';
   document.getElementById('add-cand-ic-alert').style.display = 'none';
+  const resumeLabel = document.getElementById('resume-label');
+  resumeLabel.textContent = 'Click to upload or drag & drop';
+  resumeLabel.style.color = 'var(--muted)';
+  resumeLabel.style.fontWeight = '400';
 
   document.getElementById('add-cand-modal').classList.add('open');
 }
