@@ -903,6 +903,112 @@ function moveStage(candId) {
   renderCandidates();
 }
 
+function openAddCandidateForm() {
+  // Populate JR select
+  const jrSel = document.getElementById('ac-jr');
+  jrSel.innerHTML = '<option value="">Select position</option>' +
+    JOB_REQUISITIONS.filter(j => j.status === 'Active').map(j =>
+      `<option value="${j.id}">${j.title} — ${j.entity} (${j.id})</option>`
+    ).join('');
+
+  // Clear fields
+  ['ac-name','ac-ic','ac-phone','ac-email','ac-interviewer','ac-notes'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('ac-source').value = '';
+  document.getElementById('ac-stage').value = 'Applied';
+  document.getElementById('ac-date').value = '2026-04-27';
+  document.getElementById('add-cand-ic-alert').style.display = 'none';
+
+  document.getElementById('add-cand-modal').classList.add('open');
+}
+
+function checkCandidateIC(ic) {
+  const alertBox = document.getElementById('add-cand-ic-alert');
+  const clean = ic.replace(/\s/g, '');
+  if (clean.length < 12) { alertBox.style.display = 'none'; return; }
+
+  const watchEntry = getWatchlistEntry(clean);
+  if (watchEntry) {
+    alertBox.style.display = 'block';
+    alertBox.innerHTML = `
+      <div style="background:#fef2f2;border:2px solid #fca5a5;border-radius:8px;padding:12px 14px">
+        <div style="font-weight:700;font-size:13px;color:#991b1b;margin-bottom:4px">⚠️ WATCHLIST MATCH — Bad Record on File</div>
+        <div style="font-size:12px;color:#374151;line-height:1.6">
+          <strong>${watchEntry.name}</strong> was flagged by <strong>${watchEntry.flagged_by_entity}</strong> on ${watchEntry.flagged_date}.<br>
+          Reason: ${watchEntry.reason}<br><br>
+          <strong style="color:#991b1b">${watchEntry.action}</strong>
+        </div>
+      </div>`;
+    return;
+  }
+
+  // Check concurrent duplicate at another entity
+  const jrId = document.getElementById('ac-jr').value;
+  const jr = JOB_REQUISITIONS.find(j => j.id === jrId);
+  if (jr) {
+    const twin = CANDIDATES.find(c =>
+      c.ic === clean &&
+      !['Hired','Rejected'].includes(c.stage)
+    );
+    if (twin) {
+      const twinJr = JOB_REQUISITIONS.find(j => j.id === twin.jr_id);
+      if (twinJr && twinJr.entity !== jr.entity) {
+        alertBox.style.display = 'block';
+        alertBox.innerHTML = `
+          <div style="background:#fffbeb;border:2px solid #fcd34d;border-radius:8px;padding:12px 14px">
+            <div style="font-weight:700;font-size:13px;color:#92400e;margin-bottom:4px">⚡ Concurrent Application Detected</div>
+            <div style="font-size:12px;color:#374151;line-height:1.6">
+              This IC is already active as <strong>${twin.name}</strong> at <strong>${twinJr.entity}</strong>
+              — ${twinJr.title} (${twin.stage}).<br>
+              Candidate is applying to both entities simultaneously.
+            </div>
+          </div>`;
+        return;
+      }
+    }
+  }
+
+  alertBox.style.display = 'none';
+}
+
+function submitAddCandidate() {
+  const name = document.getElementById('ac-name').value.trim();
+  const ic = document.getElementById('ac-ic').value.trim();
+  const jrId = document.getElementById('ac-jr').value;
+  const source = document.getElementById('ac-source').value;
+
+  if (!name || !ic || !jrId || !source) {
+    alert('Please fill in all required fields: Name, IC Number, Position, and Source.');
+    return;
+  }
+
+  const nextId = 'C' + String(CANDIDATES.length + 1).padStart(3, '0');
+  const newCand = {
+    id: nextId,
+    ic: ic,
+    jr_id: jrId,
+    name: name,
+    phone: document.getElementById('ac-phone').value.trim() || '—',
+    email: document.getElementById('ac-email').value.trim() || '—',
+    source: source,
+    stage: document.getElementById('ac-stage').value,
+    applied: document.getElementById('ac-date').value,
+    interviewer: document.getElementById('ac-interviewer').value.trim() || null,
+    notes: document.getElementById('ac-notes').value.trim(),
+  };
+
+  CANDIDATES.push(newCand);
+  document.getElementById('add-cand-modal').classList.remove('open');
+  renderCandidates();
+  renderPipeline();
+
+  // If it's a flagged candidate, navigate to candidates page so they see the alert
+  if (getWatchlistEntry(ic) || getConcurrentDuplicateEntry(newCand)) {
+    showPage('hiring-candidates');
+  }
+}
+
 function initHiringFilters() {
   const pipeJr = document.getElementById('pipe-jr');
   const candJr = document.getElementById('cand-jr');

@@ -442,7 +442,13 @@
         <div class="topbar-title">All Candidates</div>
         <div class="topbar-sub">Full applicant list across all positions</div>
       </div>
-      <div class="topbar-user"><div class="avatar">NA</div></div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button onclick="openAddCandidateForm()" style="display:flex;align-items:center;gap:7px;background:var(--primary);color:white;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:15px;height:15px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Candidate
+        </button>
+        <div class="topbar-user"><div class="avatar">NA</div></div>
+      </div>
     </div>
     <div class="content">
       <!-- Cross-entity risk alert — shown/hidden by JS -->
@@ -628,6 +634,73 @@
     <div class="modal-title" id="modal-cand-title"></div>
     <div class="modal-sub" id="modal-cand-sub"></div>
     <div id="modal-cand-body"></div>
+  </div>
+</div>
+
+<!-- ADD CANDIDATE MODAL -->
+<div class="modal-overlay" id="add-cand-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal" style="max-width:520px">
+    <button class="modal-close" onclick="document.getElementById('add-cand-modal').classList.remove('open')">✕</button>
+    <div class="modal-title">Add New Candidate</div>
+    <div class="modal-sub">Fill in the details below. IC number will be checked against the watchlist automatically.</div>
+    <div id="add-cand-ic-alert" style="display:none;margin:12px 0"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px">
+      <div style="grid-column:1/-1">
+        <label class="form-lbl">Full Name <span style="color:var(--danger)">*</span></label>
+        <input class="form-inp" id="ac-name" type="text" placeholder="e.g. Ahmad bin Abdullah">
+      </div>
+      <div>
+        <label class="form-lbl">IC Number <span style="color:var(--danger)">*</span></label>
+        <input class="form-inp" id="ac-ic" type="text" placeholder="e.g. 900101-14-5678" oninput="checkCandidateIC(this.value)">
+      </div>
+      <div>
+        <label class="form-lbl">Phone</label>
+        <input class="form-inp" id="ac-phone" type="text" placeholder="e.g. 012-3456789">
+      </div>
+      <div style="grid-column:1/-1">
+        <label class="form-lbl">Email</label>
+        <input class="form-inp" id="ac-email" type="email" placeholder="e.g. ahmad@gmail.com">
+      </div>
+      <div style="grid-column:1/-1">
+        <label class="form-lbl">Position / Job Requisition <span style="color:var(--danger)">*</span></label>
+        <select class="form-inp" id="ac-jr"></select>
+      </div>
+      <div>
+        <label class="form-lbl">Application Source <span style="color:var(--danger)">*</span></label>
+        <select class="form-inp" id="ac-source">
+          <option value="">Select source</option>
+          <option>JobStreet</option>
+          <option>LinkedIn</option>
+          <option>Referral</option>
+          <option>Walk-in</option>
+          <option>Others</option>
+        </select>
+      </div>
+      <div>
+        <label class="form-lbl">Initial Stage</label>
+        <select class="form-inp" id="ac-stage">
+          <option value="Applied">Applied</option>
+          <option value="Screening">Screening</option>
+          <option value="Interview 1">Interview 1</option>
+        </select>
+      </div>
+      <div>
+        <label class="form-lbl">Applied Date</label>
+        <input class="form-inp" id="ac-date" type="date" value="2026-04-27">
+      </div>
+      <div>
+        <label class="form-lbl">Interviewer</label>
+        <input class="form-inp" id="ac-interviewer" type="text" placeholder="Optional">
+      </div>
+      <div style="grid-column:1/-1">
+        <label class="form-lbl">Notes</label>
+        <textarea class="form-inp" id="ac-notes" rows="3" placeholder="Any additional notes..." style="resize:vertical"></textarea>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:20px">
+      <button onclick="submitAddCandidate()" style="flex:1;background:var(--primary);color:white;border:none;border-radius:8px;padding:11px;font-size:14px;font-weight:600;cursor:pointer">Save Candidate</button>
+      <button onclick="document.getElementById('add-cand-modal').classList.remove('open')" style="background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:11px 20px;font-size:14px;cursor:pointer">Cancel</button>
+    </div>
   </div>
 </div>
 
