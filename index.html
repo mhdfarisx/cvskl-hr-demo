@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CVSKL HR System — Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <img src="cvs-logo.png" alt="CVS Logo" style="width:90px;filter:brightness(0) invert(1);">
+      <div style="width:1px;height:28px;background:rgba(255,255,255,0.2);"></div>
+      <img src="picaso-logo.png" alt="Picaso Logo" style="width:80px;filter:brightness(0) invert(1);">
+    </div>
+    <div class="logo-sub">Human Resource System</div>
+    <div class="logo-badge">Demo</div>
+  </div>
+  <nav>
+    <div class="nav-label">Main</div>
+    <div class="nav-item active" data-page="dashboard">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </div>
+    <div class="nav-item" data-page="staff-list">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Staff List
+    </div>
+    <div class="nav-item" data-page="movement-log">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+      Movement Log
+    </div>
+    <div class="nav-label">Hiring</div>
+    <div class="nav-item" data-page="hiring-requisitions">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Job Requisitions
+    </div>
+    <div class="nav-item" data-page="hiring-pipeline">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="4" height="18" rx="1"/><rect x="10" y="8" width="4" height="13" rx="1"/><rect x="17" y="5" width="4" height="16" rx="1"/></svg>
+      Pipeline Board
+    </div>
+    <div class="nav-item" data-page="hiring-candidates">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      All Candidates
+    </div>
+    <div class="nav-label">Analytics</div>
+    <div class="nav-item" data-page="reports">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19v-6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2zm0 0V9a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v10m-6 0a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2m0 0V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2z"/></svg>
+      Hiring Reports
+    </div>
+    <div class="nav-label">System</div>
+    <div class="nav-item" data-page="settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg>
+      Settings
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    Powered by Syntrogic &copy; 2026
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- DASHBOARD PAGE -->
+  <div class="page active" id="dashboard">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">Dashboard</div>
+        <div class="topbar-sub">Workforce Overview — CVSKL &amp; PICASO</div>
+      </div>
+      <div class="topbar-user">
+        <span class="demo-badge">DEMO</span>
+        <div class="notif-btn">
+          <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+          <span class="notif-dot"></span>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:13px;font-weight:500">Nur Aisyah</div>
+          <div style="font-size:11px;color:var(--muted)">HR Manager</div>
+        </div>
+        <div class="avatar">NA</div>
+      </div>
+    </div>
+    <div class="content">
+
+      <!-- SLICERS -->
+      <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;align-items:center;">
+        <span style="font-size:12px;font-weight:600;color:var(--muted)">FILTER BY</span>
+        <select class="filter-select" id="dash-entity" onchange="refreshDashboard()">
+          <option value="all">All Entities</option>
+          <option value="CVSKL">CVSKL</option>
+          <option value="PICASO">PICASO</option>
+        </select>
+        <select class="filter-select" id="dash-contract" onchange="refreshDashboard()">
+          <option value="all">All Contract Types</option>
+          <option value="Permanent">Permanent</option>
+          <option value="Contract">Contract</option>
+        </select>
+        <select class="filter-select" id="dash-dept" onchange="refreshDashboard()">
+          <option value="all">All Departments</option>
+        </select>
+        <select class="filter-select" id="dash-gender" onchange="refreshDashboard()">
+          <option value="all">All Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+        <button onclick="resetDashboardFilters()" style="padding:8px 14px;border:1px solid var(--border);border-radius:8px;font-size:12px;background:var(--white);color:var(--muted);cursor:pointer;">Reset</button>
+      </div>
+
+      <!-- KPI CARDS -->
+      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr)">
+        <div class="stat-card">
+          <div class="stat-icon blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <div class="stat-val" id="stat-total">—</div>
+            <div class="stat-label">Total Headcount</div>
+            <div class="stat-sub" id="stat-active-sub">— active</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon red">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="18" y1="8" x2="23" y2="13"/><line x1="23" y1="8" x2="18" y2="13"/></svg>
+          </div>
+          <div>
+            <div class="stat-val" id="stat-resigned">—</div>
+            <div class="stat-label">Total Resigned</div>
+            <div class="stat-sub" id="stat-terminated-sub">— terminated</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon amber">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div>
+            <div class="stat-val" id="stat-attrition">—</div>
+            <div class="stat-label">Attrition Rate</div>
+            <div class="stat-sub">Resigned + terminated</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <div class="stat-val" id="stat-tenure">—</div>
+            <div class="stat-label">Avg. Tenure</div>
+            <div class="stat-sub">Active staff (years)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHARTS ROW 1 -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:20px">
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Headcount by Employment Type</div></div>
+          <div class="panel-body" style="display:flex;justify-content:center;align-items:center;height:220px">
+            <canvas id="chart-contract"></canvas>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Headcount by Gender</div></div>
+          <div class="panel-body" style="display:flex;justify-content:center;align-items:center;height:220px">
+            <canvas id="chart-gender"></canvas>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Staff Status Breakdown</div></div>
+          <div class="panel-body" style="display:flex;justify-content:center;align-items:center;height:220px">
+            <canvas id="chart-status"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHARTS ROW 2 -->
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:20px">
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Headcount by Division / Department</div></div>
+          <div class="panel-body" style="height:260px">
+            <canvas id="chart-dept"></canvas>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Recent Movements</div><a class="panel-action" onclick="showPage('movement-log')">View all</a></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Date</th><th>Staff</th><th>Type</th></tr></thead>
+              <tbody id="recent-movements"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECENT HIRING ACTIVITY + PIPELINE OVERVIEW -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Recent Hiring Activity</div><span style="font-size:12px;color:var(--muted)">Live updates</span></div>
+          <div class="panel-body">
+            <div class="activity-item">
+              <div class="activity-dot" style="background:#10b981"></div>
+              <div><div class="activity-text">Ahmad Zikri moved to <strong>Interview Stage 2</strong> — Finance Manager</div><div class="activity-time">10 minutes ago</div></div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:#f59e0b"></div>
+              <div><div class="activity-text">New job request submitted — <strong>Senior Developer</strong> (IT Dept)</div><div class="activity-time">45 minutes ago</div></div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:#3b82f6"></div>
+              <div><div class="activity-text">Offer letter sent to <strong>Nurul Ain Bt Hassan</strong></div><div class="activity-time">2 hours ago · via Email</div></div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:#ef4444"></div>
+              <div><div class="activity-text">Candidate <strong>Marcus Tan</strong> rejected — Marketing Executive</div><div class="activity-time">3 hours ago</div></div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:#10b981"></div>
+              <div><div class="activity-text"><strong>Siti Rahmah</strong> accepted offer — HR Executive ✓</div><div class="activity-time">Yesterday, 4:32 PM</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Hiring Pipeline Overview</div></div>
+          <div class="panel-body">
+            <div class="bar-item"><div class="bar-lbl"><span>Applied</span><span style="font-weight:600">18</span></div><div class="bar-track"><div class="bar-fill" style="width:80%;background:#3b82f6"></div></div></div>
+            <div class="bar-item"><div class="bar-lbl"><span>Screening</span><span style="font-weight:600">12</span></div><div class="bar-track"><div class="bar-fill" style="width:55%;background:#f59e0b"></div></div></div>
+            <div class="bar-item"><div class="bar-lbl"><span>Interview</span><span style="font-weight:600">9</span></div><div class="bar-track"><div class="bar-fill" style="width:40%;background:#8b5cf6"></div></div></div>
+            <div class="bar-item"><div class="bar-lbl"><span>Offer</span><span style="font-weight:600">5</span></div><div class="bar-track"><div class="bar-fill" style="width:22%;background:#10b981"></div></div></div>
+            <div class="bar-item"><div class="bar-lbl"><span>Hired</span><span style="font-weight:600">3</span></div><div class="bar-track"><div class="bar-fill" style="width:13%;background:#065f46"></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UPCOMING INTERVIEWS -->
+      <div class="panel">
+        <div class="panel-header"><div class="panel-title">Upcoming Interviews</div><button class="btn btn-outline btn-sm" onclick="showPage('hiring-pipeline')">View Pipeline</button></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Candidate</th><th>Position</th><th>Department</th><th>Date & Time</th><th>Interviewer</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Ahmad Zikri</strong></td><td>Finance Manager</td><td>Finance</td><td>Today, 2:00 PM</td><td>En. Razif</td><td><span class="badge badge-stage-interview">Interview 2</span></td></tr>
+              <tr><td><strong>Priya Nair</strong></td><td>Senior Developer</td><td>IT</td><td>Today, 3:30 PM</td><td>En. Hafiz</td><td><span class="badge badge-stage-interview">Interview 1</span></td></tr>
+              <tr><td><strong>Lee Chee Wai</strong></td><td>Marketing Executive</td><td>Marketing</td><td>Tomorrow, 10:00 AM</td><td>Pn. Suraya</td><td><span class="badge badge-stage-screening">Pending</span></td></tr>
+              <tr><td><strong>Tengku Arif</strong></td><td>Senior Developer</td><td>IT</td><td>28 Apr, 9:00 AM</td><td>En. Hafiz</td><td><span class="badge badge-stage-offer">Confirmed</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STAFF LIST PAGE -->
+  <div class="page" id="staff-list">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">Staff List</div>
+        <div class="topbar-sub" id="staff-count-label">All records</div>
+      </div>
+      <div class="topbar-user">
+        <div class="avatar">NA</div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="toolbar">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input id="staff-search" type="text" placeholder="Search by name, department, position...">
+        </div>
+        <select class="filter-select" id="filter-entity">
+          <option value="all">All Entities</option>
+          <option value="CVSKL">CVSKL</option>
+          <option value="PICASO">PICASO</option>
+        </select>
+        <select class="filter-select" id="filter-status">
+          <option value="all">All Status</option>
+          <option value="Active">Active</option>
+          <option value="Probation">Probation</option>
+          <option value="Resigned">Resigned</option>
+          <option value="Terminated">Terminated</option>
+        </select>
+      </div>
+      <div class="panel">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Staff</th>
+                <th>Entity</th>
+                <th>Department</th>
+                <th>Position</th>
+                <th>Status</th>
+                <th>Service</th>
+                <th>Contract</th>
+              </tr>
+            </thead>
+            <tbody id="staff-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAFF PROFILE PAGE -->
+  <div class="page" id="staff-profile">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">Staff Profile</div>
+        <div class="topbar-sub">Individual record</div>
+      </div>
+      <div class="topbar-user">
+        <div class="avatar">NA</div>
+      </div>
+    </div>
+    <div class="content" id="profile-content"></div>
+  </div>
+
+  <!-- MOVEMENT LOG PAGE -->
+  <div class="page" id="movement-log">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">Movement Log</div>
+        <div class="topbar-sub">All staff movements — hires, resignations, transfers, promotions</div>
+      </div>
+      <div class="topbar-user">
+        <div class="avatar">NA</div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="panel">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Staff</th>
+                <th>Entity</th>
+                <th>Type</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Note</th>
+              </tr>
+            </thead>
+            <tbody id="movement-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JOB REQUISITIONS PAGE -->
+  <div class="page" id="hiring-requisitions">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">Job Requisitions</div>
+        <div class="topbar-sub">All open and closed positions</div>
+      </div>
+      <div class="topbar-user"><div class="avatar">NA</div></div>
+    </div>
+    <div class="content">
+      <div class="toolbar">
+        <select class="filter-select" id="jr-entity" onchange="renderRequisitions()">
+          <option value="all">All Entities</option>
+          <option value="CVSKL">CVSKL</option>
+          <option value="PICASO">PICASO</option>
+        </select>
+        <select class="filter-select" id="jr-status" onchange="renderRequisitions()">
+          <option value="all">All Status</option>
+          <option value="Active">Active</option>
+          <option value="Closed">Closed</option>
+          <option value="On Hold">On Hold</option>
+        </select>
+        <select class="filter-select" id="jr-urgency" onchange="renderRequisitions()">
+          <option value="all">All Urgency</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+      </div>
+      <div class="panel">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>JR ID</th><th>Position</th><th>Entity</th><th>Headcount</th><th>Salary Range</th><th>Urgency</th><th>Status</th><th>Candidates</th><th></th></tr>
+            </thead>
+            <tbody id="jr-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIPELINE BOARD PAGE -->
+  <div class="page" id="hiring-pipeline">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">Pipeline Board</div>
+        <div class="topbar-sub">Candidate stage overview</div>
+      </div>
+      <div class="topbar-user"><div class="avatar">NA</div></div>
+    </div>
+    <div class="content">
+      <div class="toolbar">
+        <select class="filter-select" id="pipe-entity" onchange="onPipeEntityChange()">
+          <option value="all">All Entities</option>
+          <option value="CVSKL">CVSKL</option>
+          <option value="PICASO">PICASO</option>
+        </select>
+        <select class="filter-select" id="pipe-dept" onchange="renderPipeline()">
+          <option value="all">All Departments</option>
+        </select>
+        <select class="filter-select" id="pipe-jr" onchange="renderPipeline()"></select>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);cursor:pointer;margin-left:4px">
+          <input type="checkbox" id="pipe-show-done" onchange="renderPipeline()" style="cursor:pointer">
+          Show Hired &amp; Rejected
+        </label>
+      </div>
+      <div class="kanban-board" id="kanban-board">
+        <div class="kanban-col" id="col-Applied"><div class="kanban-col-header"><span>Applied</span><span class="kanban-count">0</span></div><div class="kanban-body"></div></div>
+        <div class="kanban-col" id="col-Screening"><div class="kanban-col-header"><span>Screening</span><span class="kanban-count">0</span></div><div class="kanban-body"></div></div>
+        <div class="kanban-col" id="col-Interview1"><div class="kanban-col-header"><span>Interview 1</span><span class="kanban-count">0</span></div><div class="kanban-body"></div></div>
+        <div class="kanban-col" id="col-Interview2"><div class="kanban-col-header"><span>Interview 2</span><span class="kanban-count">0</span></div><div class="kanban-body"></div></div>
+        <div class="kanban-col" id="col-Offer"><div class="kanban-col-header"><span>Offer</span><span class="kanban-count">0</span></div><div class="kanban-body"></div></div>
+        <div class="kanban-col kanban-col-done" id="col-Hired" style="display:none"><div class="kanban-col-header" style="color:var(--success)"><span>Hired</span><span class="kanban-count" style="background:var(--success)">0</span></div><div class="kanban-body"></div></div>
+        <div class="kanban-col kanban-col-done" id="col-Rejected" style="display:none"><div class="kanban-col-header" style="color:var(--danger)"><span>Rejected</span><span class="kanban-count" style="background:var(--danger)">0</span></div><div class="kanban-body"></div></div>
+      </div>
+      <div id="kanban-summary" style="margin-top:12px;font-size:12px;color:var(--muted)"></div>
+    </div>
+  </div>
+
+  <!-- ALL CANDIDATES PAGE -->
+  <div class="page" id="hiring-candidates">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">All Candidates</div>
+        <div class="topbar-sub">Full applicant list across all positions</div>
+      </div>
+      <div class="topbar-user"><div class="avatar">NA</div></div>
+    </div>
+    <div class="content">
+      <!-- Cross-entity risk alert — shown/hidden by JS -->
+      <div id="cross-entity-alert" style="display:none;background:#fef2f2;border:2px solid #fca5a5;border-radius:12px;padding:16px 20px;margin-bottom:16px"></div>
+
+      <div class="toolbar">
+        <select class="filter-select" id="cand-jr" onchange="renderCandidates()"></select>
+        <select class="filter-select" id="cand-stage" onchange="renderCandidates()">
+          <option value="all">All Stages</option>
+          <option>Applied</option><option>Screening</option><option>Interview 1</option>
+          <option>Interview 2</option><option>Offer</option><option>Hired</option><option>Rejected</option>
+        </select>
+        <select class="filter-select" id="cand-source" onchange="renderCandidates()">
+          <option value="all">All Sources</option>
+          <option>JobStreet</option><option>LinkedIn</option><option>Referral</option><option>Walk-in</option>
+        </select>
+      </div>
+      <div class="panel">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Candidate</th><th>Position</th><th>Entity</th><th>Source</th><th>Stage</th><th>Applied</th><th>Interviewer</th><th></th></tr>
+            </thead>
+            <tbody id="cand-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- HIRING REPORTS PAGE -->
+  <div class="page" id="reports">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">Hiring Reports</div>
+        <div class="topbar-sub">Analytics & performance metrics</div>
+      </div>
+      <div class="topbar-user">
+        <span class="demo-badge">DEMO</span>
+        <button class="btn btn-outline btn-sm">Export PDF</button>
+        <div class="avatar">NA</div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr)">
+        <div class="stat-card">
+          <div class="stat-icon blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <div class="stat-val">23 <span style="font-size:15px;font-weight:400;color:var(--muted)">days</span></div>
+            <div class="stat-label">Avg. Time to Hire</div>
+            <div class="stat-sub" style="color:var(--success)">▲ 3 days faster than last month</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div>
+            <div class="stat-val">78<span style="font-size:15px;font-weight:400;color:var(--muted)">%</span></div>
+            <div class="stat-label">Offer Acceptance Rate</div>
+            <div class="stat-sub" style="color:var(--success)">▲ +5% vs last month</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon amber">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <div class="stat-val">6 <span style="font-size:15px;font-weight:400;color:var(--muted)">/ 8</span></div>
+            <div class="stat-label">Hired This Month</div>
+            <div class="stat-sub">Target: 8 hires for April</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div>
+            <div class="stat-val">3</div>
+            <div class="stat-label">Positions Closed</div>
+            <div class="stat-sub">5 positions still in progress</div>
+          </div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px">
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Hiring by Department</div><span style="font-size:12px;color:var(--muted)">April 2026</span></div>
+          <div class="panel-body" style="padding:24px">
+            <div class="bar-item"><div class="bar-lbl"><span>IT</span><span>14 candidates</span></div><div class="bar-track"><div class="bar-fill" style="width:80%;background:#3b82f6"></div></div></div>
+            <div class="bar-item"><div class="bar-lbl"><span>Finance</span><span>9 candidates</span></div><div class="bar-track"><div class="bar-fill" style="width:55%;background:#8b5cf6"></div></div></div>
+            <div class="bar-item"><div class="bar-lbl"><span>Marketing</span><span>8 candidates</span></div><div class="bar-track"><div class="bar-fill" style="width:48%;background:#f59e0b"></div></div></div>
+            <div class="bar-item"><div class="bar-lbl"><span>HR</span><span>6 candidates</span></div><div class="bar-track"><div class="bar-fill" style="width:36%;background:#10b981"></div></div></div>
+            <div class="bar-item"><div class="bar-lbl"><span>Operations</span><span>5 candidates</span></div><div class="bar-track"><div class="bar-fill" style="width:30%;background:#ef4444"></div></div></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Candidate Source Breakdown</div></div>
+          <div class="panel-body" style="padding:24px">
+            <div class="bar-item"><div class="bar-lbl"><span>JobStreet</span><span>42%</span></div><div class="bar-track"><div class="bar-fill" style="width:42%;background:#e8453c"></div></div></div>
+            <div class="bar-item"><div class="bar-lbl"><span>LinkedIn</span><span>31%</span></div><div class="bar-track"><div class="bar-fill" style="width:31%;background:#0077b5"></div></div></div>
+            <div class="bar-item"><div class="bar-lbl"><span>Referral</span><span>18%</span></div><div class="bar-track"><div class="bar-fill" style="width:18%;background:#10b981"></div></div></div>
+            <div class="bar-item"><div class="bar-lbl"><span>Walk-in</span><span>9%</span></div><div class="bar-track"><div class="bar-fill" style="width:9%;background:#f59e0b"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS PAGE -->
+  <div class="page" id="settings">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">Settings</div>
+        <div class="topbar-sub">System configuration & user access</div>
+      </div>
+      <div class="topbar-user">
+        <span class="demo-badge">DEMO</span>
+        <div class="avatar">NA</div>
+      </div>
+    </div>
+    <div class="content">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px">
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Company Settings</div></div>
+          <div class="panel-body" style="padding:28px">
+            <div class="form-grp"><label class="form-lbl">Company Name</label><input class="form-inp" value="CVSKL Sdn Bhd"></div>
+            <div class="form-grp"><label class="form-lbl">HR Admin Email</label><input class="form-inp" value="hr@cvskl.com.my"></div>
+            <div class="form-grp"><label class="form-lbl">Primary Contact Number</label><input class="form-inp" value="03-1234 5678"></div>
+            <div class="form-grp"><label class="form-lbl">Default Currency</label><select class="form-inp"><option>MYR — Malaysian Ringgit</option></select></div>
+            <div class="form-grp"><label class="form-lbl">System Language</label><select class="form-inp"><option>English</option><option>Bahasa Malaysia</option></select></div>
+            <button class="btn btn-primary" style="margin-top:8px;padding:12px 24px;font-size:14px">Save Changes</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Notification Settings</div></div>
+          <div class="panel-body" style="padding:28px">
+            <div class="form-grp"><label class="form-lbl">Email Notifications</label><select class="form-inp"><option>Enabled — All Events</option><option>Enabled — Critical Only</option><option>Disabled</option></select></div>
+            <div class="form-grp"><label class="form-lbl">Notify on New Candidate</label><select class="form-inp"><option>HR Admin + HOD</option><option>HR Admin Only</option></select></div>
+            <div class="form-grp"><label class="form-lbl">Interview Reminder</label><select class="form-inp"><option>24 hours before</option><option>1 hour before</option><option>Both</option></select></div>
+            <div class="form-grp"><label class="form-lbl">Offer Letter Approval Alert</label><select class="form-inp"><option>Immediate</option><option>Daily Digest</option><option>Disabled</option></select></div>
+            <div class="form-grp"><label class="form-lbl">Pipeline Stale Alert (no activity)</label><select class="form-inp"><option>After 7 days</option><option>After 14 days</option><option>Disabled</option></select></div>
+            <button class="btn btn-primary" style="margin-top:8px;padding:12px 24px;font-size:14px">Save Changes</button>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-header"><div class="panel-title">User Access Management</div><button class="btn btn-primary btn-sm">+ Add User</button></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Name</th><th>Email</th><th>Department</th><th>Role</th><th>Status</th><th></th></tr></thead>
+            <tbody>
+              <tr><td><strong>Pn. Azura</strong></td><td>azura@cvskl.com.my</td><td>Human Resources</td><td><span class="badge badge-role-admin">HR Admin</span></td><td><span class="badge badge-user-active">Active</span></td><td><button class="btn btn-outline btn-sm">Edit</button></td></tr>
+              <tr><td><strong>En. Razif</strong></td><td>razif@cvskl.com.my</td><td>Finance</td><td><span class="badge badge-role-mgr">Dept. Manager</span></td><td><span class="badge badge-user-active">Active</span></td><td><button class="btn btn-outline btn-sm">Edit</button></td></tr>
+              <tr><td><strong>En. Hafiz</strong></td><td>hafiz@cvskl.com.my</td><td>IT</td><td><span class="badge badge-role-mgr">Interviewer</span></td><td><span class="badge badge-user-active">Active</span></td><td><button class="btn btn-outline btn-sm">Edit</button></td></tr>
+              <tr><td><strong>Pn. Suraya</strong></td><td>suraya@cvskl.com.my</td><td>Marketing</td><td><span class="badge badge-role-mgr">Dept. Manager</span></td><td><span class="badge badge-user-active">Active</span></td><td><button class="btn btn-outline btn-sm">Edit</button></td></tr>
+              <tr><td><strong>En. Kamarul</strong></td><td>kamarul@cvskl.com.my</td><td>Operations</td><td><span class="badge badge-role-mgr">Dept. Manager</span></td><td><span class="badge badge-user-active">Active</span></td><td><button class="btn btn-outline btn-sm">Edit</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end .main -->
+
+<!-- JR DETAIL MODAL -->
+<div class="modal-overlay" id="jr-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('jr-modal').classList.remove('open')">✕</button>
+    <div class="modal-title" id="modal-jr-title"></div>
+    <div class="modal-sub" id="modal-jr-sub"></div>
+    <div id="modal-jr-body"></div>
+  </div>
+</div>
+
+<!-- CANDIDATE DETAIL MODAL -->
+<div class="modal-overlay" id="cand-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('cand-modal').classList.remove('open')">✕</button>
+    <div class="modal-title" id="modal-cand-title"></div>
+    <div class="modal-sub" id="modal-cand-sub"></div>
+    <div id="modal-cand-body"></div>
+  </div>
+</div>
+
+<!-- AI CHAT -->
+<button class="ai-chat-fab" onclick="toggleChat()">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+</button>
+
+<div class="ai-chat-panel hidden" id="ai-chat-panel">
+  <div class="ai-chat-header">
+    <div class="ai-avatar">🤖</div>
+    <div>
+      <div class="ai-name">HR Assistant</div>
+      <div class="ai-status">Ask anything about your staff</div>
+    </div>
+  </div>
+  <div class="ai-messages" id="ai-messages"></div>
+  <div class="ai-suggestions" id="ai-suggestions"></div>
+  <div class="ai-input-row">
+    <input class="ai-input" id="ai-input" type="text" placeholder="Ask a question...">
+    <button class="ai-send" onclick="sendMessage()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
