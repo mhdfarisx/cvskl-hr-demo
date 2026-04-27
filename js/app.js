@@ -1,3 +1,11 @@
+// --- MOBILE SIDEBAR ---
+function toggleMobileSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('mobile-overlay');
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('open');
+}
+
 // --- ROUTING ---
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -223,7 +231,7 @@ function openProfile(id) {
     </div>
 
     <!-- TABS -->
-    <div style="display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid var(--border);">
+    <div style="display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid var(--border);overflow-x:auto;">
       ${['overview','leave','salary','performance'].map((t,i) => `
         <div onclick="switchTab('${t}')" id="tab-${t}" style="padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:2px solid ${i===0?'var(--primary)':'transparent'};margin-bottom:-2px;color:${i===0?'var(--primary)':'var(--muted)'};transition:all 0.15s">
           ${{overview:'Overview',leave:'Leave',salary:'Salary & Increments',performance:'Performance'}[t]}
@@ -282,7 +290,7 @@ function openProfile(id) {
     <!-- LEAVE TAB -->
     <div id="tabcontent-leave" style="display:none">
       ${leave ? `
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px">
+        <div class="grid-3-sm">
           ${[
             { label:'Annual Leave', entitled: leave.al_entitled, taken: leave.al_taken, balance: leave.al_balance, color:'var(--primary)' },
             { label:'Medical Leave', entitled: 14, taken: leave.mc_taken, balance: leave.mc_balance, color:'var(--success)' },
@@ -345,7 +353,7 @@ function openProfile(id) {
     <!-- PERFORMANCE TAB -->
     <div id="tabcontent-performance" style="display:none">
       ${perf ? `
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px">
+        <div class="grid-3-sm">
           <div class="info-card">
             <div class="info-card-title">Performance Tier</div>
             <div style="margin-top:10px"><span class="badge" style="color:${tc};background:${tb};font-size:14px;padding:6px 16px">${perf.tier}</span></div>
@@ -521,6 +529,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (page === 'hiring-requisitions') renderRequisitions();
       if (page === 'hiring-pipeline') renderPipeline();
       if (page === 'hiring-candidates') renderCandidates();
+      // Close sidebar on mobile after nav click
+      const sidebar = document.querySelector('.sidebar');
+      const overlay = document.getElementById('mobile-overlay');
+      if (sidebar.classList.contains('open')) {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('open');
+      }
     });
   });
 
@@ -870,7 +885,7 @@ function openCandDetail(candId) {
       <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Hiring Stage</div>
       <div style="display:flex;align-items:center;overflow-x:auto;padding-bottom:4px">${steps}</div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;margin-bottom:16px">
+    <div class="grid-2" style="gap:8px;font-size:13px;margin-bottom:16px">
       <div><span style="color:var(--muted)">Phone</span><div style="font-weight:600;margin-top:2px">${c.phone}</div></div>
       <div><span style="color:var(--muted)">Email</span><div style="font-weight:600;margin-top:2px">${c.email}</div></div>
       <div><span style="color:var(--muted)">Applied</span><div style="font-weight:600;margin-top:2px">${c.applied}</div></div>

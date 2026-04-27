@@ -11,6 +11,12 @@
 </head>
 <body>
 
+<!-- MOBILE HAMBURGER -->
+<button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileSidebar()">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
+<div class="mobile-overlay" id="mobile-overlay" onclick="toggleMobileSidebar()"></div>
+
 <!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="sidebar-logo">
@@ -115,7 +121,7 @@
       </div>
 
       <!-- KPI CARDS -->
-      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr)">
+      <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-icon blue">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
@@ -159,7 +165,7 @@
       </div>
 
       <!-- CHARTS ROW 1 -->
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:20px">
+      <div class="grid-3">
         <div class="panel">
           <div class="panel-header"><div class="panel-title">Headcount by Employment Type</div></div>
           <div class="panel-body" style="display:flex;justify-content:center;align-items:center;height:220px">
@@ -181,7 +187,7 @@
       </div>
 
       <!-- CHARTS ROW 2 -->
-      <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:20px">
+      <div class="grid-2-1">
         <div class="panel">
           <div class="panel-header"><div class="panel-title">Headcount by Division / Department</div></div>
           <div class="panel-body" style="height:260px">
@@ -200,7 +206,7 @@
       </div>
 
       <!-- RECENT HIRING ACTIVITY + PIPELINE OVERVIEW -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
+      <div class="grid-2">
         <div class="panel">
           <div class="panel-header"><div class="panel-title">Recent Hiring Activity</div><span style="font-size:12px;color:var(--muted)">Live updates</span></div>
           <div class="panel-body">
@@ -494,7 +500,7 @@
       </div>
     </div>
     <div class="content">
-      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr)">
+      <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-icon blue">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
@@ -536,7 +542,7 @@
           </div>
         </div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px">
+      <div class="grid-2-lg">
         <div class="panel">
           <div class="panel-header"><div class="panel-title">Hiring by Department</div><span style="font-size:12px;color:var(--muted)">April 2026</span></div>
           <div class="panel-body" style="padding:24px">
@@ -573,7 +579,7 @@
       </div>
     </div>
     <div class="content">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px">
+      <div class="grid-2-lg">
         <div class="panel">
           <div class="panel-header"><div class="panel-title">Company Settings</div></div>
           <div class="panel-body" style="padding:28px">
@@ -644,7 +650,7 @@
     <div class="modal-title">Add New Candidate</div>
     <div class="modal-sub">Fill in the details below. IC number will be checked against the watchlist automatically.</div>
     <div id="add-cand-ic-alert" style="display:none;margin:12px 0"></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px">
+    <div class="add-cand-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px">
       <div style="grid-column:1/-1">
         <label class="form-lbl">Full Name <span style="color:var(--danger)">*</span></label>
         <input class="form-inp" id="ac-name" type="text" placeholder="e.g. Ahmad bin Abdullah">
